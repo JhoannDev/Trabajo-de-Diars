@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h4 class="text-center mb-3"><i class="bi bi-person-circle"></i> Iniciar sesión</h4>
+
+                    @if (ViewBag.Error != null)
+                    {
+                            <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+                    @if (ViewBag.Message != null)
+                    {
+                            <div class="alert alert-success">@ViewBag.Message</div>
+                    }
+
+                    <form method="post" asp-action="Index">
+                       <div class="mb-3">
+                            <label class="form-label fw-semibold">Correo Electrónico</label>
+                            <input type="email" name="email" class="form-control" required placeholder="ejemplo@gmail.com" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Contraseña</label>
+                            <input type="password" name="password" class="form-control" required placeholder="********" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 text-white fw-semibold">Ingresar</button>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <a asp-action="ForgotPassword" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-danger text-white fw-semibold">Volver</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

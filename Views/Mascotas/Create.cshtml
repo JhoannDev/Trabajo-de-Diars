@@ -1,0 +1,96 @@
+﻿@model Proyecto.Models.Mascota
+
+@{
+    ViewData["Title"] = "Registrar Mascota";
+}
+
+<h1 class="text-primary mb-4">
+    <i class="bi bi-paw-fill me-2"></i>Registrar Nueva Mascota
+</h1>
+
+<div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body p-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nombre" class="form-label fw-semibold">Nombre de la Mascota</label>
+                    <input asp-for="Nombre" class="form-control rounded-3" placeholder="Ej. Luna, Rocky..." />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Especie" class="form-label fw-semibold">Especie</label>
+                    <input asp-for="Especie" class="form-control rounded-3" placeholder="Ej. Perro, Gato..." />
+                    <span asp-validation-for="Especie" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Raza" class="form-label fw-semibold">Raza</label>
+                    <input asp-for="Raza" class="form-control rounded-3" placeholder="Ej. Labrador, Siames..." />
+                    <span asp-validation-for="Raza" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Edad" class="form-label fw-semibold">Edad</label>
+                    <input asp-for="Edad" type="number" class="form-control rounded-3" placeholder="Ej. 3" />
+                    <span asp-validation-for="Edad" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label asp-for="EstadoAdopcion" class="form-label fw-semibold">Estado de Adopción</label>
+                    <select asp-for="EstadoAdopcion" class="form-select rounded-3">
+                        <option value="">Seleccione...</option>
+                        <option>Sin adoptar</option>
+                        <option>En proceso</option>
+                        <option>Adoptado</option>
+                    </select>
+                    <span asp-validation-for="EstadoAdopcion" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="foto" class="form-label fw-semibold">Foto de la Mascota</label>
+                    <input type="file" name="foto" class="form-control rounded-3" />
+                </div>
+            </div>
+
+            <div class="mt-3 d-flex align-items-center">
+                <button type="submit" class="btn btn-success rounded-pill px-4 me-2 shadow-sm">
+                    <i class="bi bi-check-circle me-1"></i> Registrar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    h1 {
+        font-weight: 700;
+    }
+
+    .card {
+        background-color: #ffffff;
+    }
+
+    .form-label {
+        color: #2c3e50;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>

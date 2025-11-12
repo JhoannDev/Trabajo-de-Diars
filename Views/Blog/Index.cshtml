@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Proyecto.Models.Blog>
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Blog Educativo";
+    var rol = Context.Session.GetString("UserRole"); // obtenemos el rol desde la sesión
+}
+
+<h2>Blog Educativo</h2>
+<hr />
+
+<!-- Botón para crear nuevo blog, solo visible si el usuario es Administrador -->
+@if (rol == "Administrador")
+{
+    <a asp-action="Crear" class="btn btn-success mb-3">➕ Agregar Nuevo Blog</a>
+}
+
+@if (!Model.Any())
+{
+    <p>No hay publicaciones disponibles.</p>
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        <div class="card mb-3 shadow-sm">
+            <img src="@item.ImagenUrl" class="card-img-top" alt="@item.Titulo"
+                 style="max-height:300px;object-fit:cover;" />
+
+            <div class="card-body">
+                <h4>@item.Titulo</h4>
+                <p class="text-muted">
+                    @item.FechaPublicacion.ToShortDateString() - <b>@item.Autor</b>
+                </p>
+                <p>
+                    @item.Contenido.Substring(0, Math.Min(200, item.Contenido.Length))...
+                </p>
+
+                <a href="@Url.Action("Detalle", "Blog", new { id = item.Id })"
+                   class="btn btn-primary">Leer más</a>
+
+                @* Solo el administrador puede editar o eliminar *@
+                @if (rol == "Administrador")
+                {
+                    <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning">✏️ Editar</a>
+                    <a asp-action="Eliminar" asp-route-id="@item.Id"
+                       class="btn btn-danger"
+                       onclick="return confirm('¿Seguro que deseas eliminar este blog?');">
+                        🗑 Eliminar
+                    </a>
+                }
+            </div>
+        </div>
+    }
+}

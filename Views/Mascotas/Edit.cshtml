@@ -1,0 +1,111 @@
+﻿@model Proyecto.Models.Mascota
+
+@{
+    ViewData["Title"] = "Editar Mascota";
+}
+
+<h1 class="mb-4 text-primary"><i class="bi bi-pencil-square me-2"></i>Editar Mascota</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="FotoUrl" />
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label fw-semibold">Nombre de la Mascota</label>
+                        <input asp-for="Nombre" class="form-control" placeholder="Ej. Max, Luna, Rocky" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Especie" class="form-label fw-semibold">Especie</label>
+                        <input asp-for="Especie" class="form-control" placeholder="Perro, Gato, etc." />
+                        <span asp-validation-for="Especie" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Raza" class="form-label fw-semibold">Raza</label>
+                        <input asp-for="Raza" class="form-control" placeholder="Ej. Labrador, Siamés..." />
+                        <span asp-validation-for="Raza" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Edad" class="form-label fw-semibold">Edad (en años)</label>
+                        <input asp-for="Edad" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="Edad" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EstadoAdopcion" class="form-label fw-semibold">Estado de Adopción</label>
+                        <select asp-for="EstadoAdopcion" class="form-select">
+                            <option value="SinAdoptar">Sin Adoptar</option>
+                            <option value="EnProceso">En Proceso</option>
+                            <option value="Adoptado">Adoptado</option>
+                        </select>
+                        <span asp-validation-for="EstadoAdopcion" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Foto actual</label>
+                        <div class="mb-2">
+                            @if (!string.IsNullOrEmpty(Model.FotoUrl))
+                            {
+                                    <img src="@Model.FotoUrl" alt="@Model.Nombre" class="img-thumbnail shadow-sm" style="max-height: 180px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                    <div class="text-muted">Sin imagen disponible</div>
+                            }
+                        </div>
+                        <label for="foto" class="form-label fw-semibold">Cambiar foto</label>
+                        <input type="file" name="foto" class="form-control" />
+                    </div>
+
+                    <div class="d-flex justify-content-start">
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 me-2">
+                            <i class="bi bi-save"></i> Guardar Cambios
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">
+                            <i class="bi bi-arrow-left"></i> Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    h1 {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 1.5rem;
+    }
+
+    .form-label {
+        color: #2c3e50;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>

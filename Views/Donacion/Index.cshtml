@@ -1,0 +1,48 @@
+﻿@model Proyecto.Models.Donacion
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>Donacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreDonante" class="control-label"></label>
+                <input asp-for="NombreDonante" class="form-control" />
+                <span asp-validation-for="NombreDonante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailDonante" class="control-label"></label>
+                <input asp-for="EmailDonante" class="form-control" />
+                <span asp-validation-for="EmailDonante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Monto" class="control-label"></label>
+                <input asp-for="Monto" class="form-control" />
+                <span asp-validation-for="Monto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaDonacion" class="control-label"></label>
+                <input asp-for="FechaDonacion" class="form-control" />
+                <span asp-validation-for="FechaDonacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

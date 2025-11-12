@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Proyecto.Models.Adopcion>
+
+@{
+    ViewData["Title"] = "Revisión de Postulaciones";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>Aquí puedes ver las postulaciones enviadas por los usuarios.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Mascota
+            </th>
+            <th>
+                Nombre Postulante
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Teléfono
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mascota.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombrePostulante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailPostulante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelefonoPostulante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaPostulacion)
+                </td>
+                <td>
+                    <a asp-action="DetallePostulacion" asp-route-id="@item.Id" class="btn btn-info btn-sm">Ver Motivo</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

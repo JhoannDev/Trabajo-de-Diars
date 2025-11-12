@@ -1,0 +1,21 @@
+﻿@model Proyecto.Models.Blog
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Crear Blog";
+    var userRole = Context.Session.GetString("UserRole");
+    var userName = Context.Session.GetString("UserName");
+}
+
+@if (userRole != "Administrador")
+{
+    <div class="alert alert-danger">
+        🚫 No tienes permisos para acceder a esta sección.
+    </div>
+}
+else
+{
+    <h2 class="mb-4">📰 Crear nuevo Blog Educativo</h2>
+
+    @await Html.PartialAsync("_FormularioBlog", new Proyecto.Models.Blog { Autor = userName })
+}

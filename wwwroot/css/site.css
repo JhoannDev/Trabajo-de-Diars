@@ -1,0 +1,83 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Encabezado azul consistente */
+.table thead.th-primary, .table thead.table-primary th {
+    background-color: #007bff !important;
+    color: #fff !important;
+    border: none;
+}
+
+/* la clase table-primary en thead */
+.table.table-striped thead.table-primary th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Alineación y mínimo ancho botones */
+.table td .btn {
+    min-width: 80px;
+    font-weight: 400;
+}
+
+/* Espaciado entre botones */
+.table td .btn + .btn {
+    margin-left: .35rem;
+}
+
+/* Asegurar vertical align */
+.table td {
+    vertical-align: middle;
+}
+
+/* Sombra y radiused table wrapper */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Botones: suavizar transición */
+.btn {
+    transition: transform .12s ease-in-out;
+}
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+}
+
+/* Tarjetas con sombra y bordes redondeados */
+.card img {
+    border-radius: 10px;
+}
+
+.row > div {
+    margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+    .col-md-7 {
+        padding-right: 25px;
+    }
+}
+
+body {
+  margin-bottom: 60px;
+}

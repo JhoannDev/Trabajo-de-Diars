@@ -1,0 +1,33 @@
+﻿@model Proyecto.Models.Mascota
+
+@{
+    ViewData["Title"] = "Conoce a " + Model.Nombre;
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://via.placeholder.com/600x500.png?text=Foto+de+@Model.Nombre" class="img-fluid rounded shadow" alt="Foto de @Model.Nombre">
+        </div>
+        <div class="col-md-6">
+            <h1 class="display-4">@Model.Nombre</h1>
+            <p class="fs-4 text-muted">@Model.Especie - @Model.Raza</p>
+            <hr>
+
+            <h3>Detalles</h3>
+            <ul>
+                <li><strong>Edad:</strong> @Model.Edad años</li>
+                <li><strong>Estado:</strong> @Model.EstadoAdopcion</li>
+            </ul>
+
+            <h3>Nuestra Historia</h3>
+            <p>HISTORIA</p>
+
+            <div class="d-grid gap-2 mt-4">
+                <a asp-action="Postular" asp-route-id="@Model.Id" class="btn btn-success btn-lg">
+                    ¡Quiero Postular!
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

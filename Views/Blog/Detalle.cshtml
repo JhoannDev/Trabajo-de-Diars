@@ -1,0 +1,13 @@
+﻿@model Proyecto.Models.Blog
+
+<h2>@Model.Titulo</h2>
+<p class="text-muted">@Model.FechaPublicacion.ToShortDateString() - <b>@Model.Autor</b></p>
+
+@if (!string.IsNullOrEmpty(Model.ImagenUrl))
+{
+    <img src="@Model.ImagenUrl" class="img-fluid mb-3 rounded" alt="@Model.Titulo" />
+}
+
+<p>@Model.Contenido</p>
+
+<a asp-action="Index" class="btn btn-secondary">🔙 Volver al Blog</a>

@@ -1,0 +1,49 @@
+﻿@model Proyecto.Models.Adopcion
+
+@{
+    ViewData["Title"] = "Formulario de Postulación";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Formulario de Postulación</h1>
+            <p class="text-center text-muted">Estás a un paso de cambiar una vida. Por favor, llena tus datos para que el equipo de administración pueda evaluarlos.</p>
+            <hr />
+
+            <form asp-action="Postular">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="MascotaId" />
+
+                <div class="mb-3">
+                    <label asp-for="NombrePostulante" class="form-label"></label>
+                    <input asp-for="NombrePostulante" class="form-control" />
+                    <span asp-validation-for="NombrePostulante" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="EmailPostulante" class="form-label"></label>
+                    <input asp-for="EmailPostulante" class="form-control" />
+                    <span asp-validation-for="EmailPostulante" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TelefonoPostulante" class="form-label"></label>
+                    <input asp-for="TelefonoPostulante" class="form-control" />
+                    <span asp-validation-for="TelefonoPostulante" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Motivo" class="form-label"></label>
+                    <textarea asp-for="Motivo" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Motivo" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Enviar Postulación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

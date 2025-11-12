@@ -1,0 +1,89 @@
+﻿@model Proyecto.Models.Producto
+
+@{
+    ViewData["Title"] = "Eliminar Producto";
+}
+
+<h1 class="mb-4 text-danger">Eliminar Producto</h1>
+
+<h4 class="fw-semibold text-secondary mb-3">¿Estás seguro de que deseas eliminar este producto?</h4>
+
+<div class="row align-items-start">
+    <!-- Imagen del producto -->
+    <div class="col-md-4 text-center mb-3">
+        @if (!string.IsNullOrEmpty(Model.FotoUrl))
+        {
+                <img src="@Model.FotoUrl" alt="@Model.Nombre" class="img-fluid shadow rounded" style="max-height: 260px; object-fit: cover;">
+        }
+        else
+        {
+                <div class="border rounded p-4 bg-light text-muted">Sin imagen disponible</div>
+        }
+    </div>
+
+    <!-- Datos del producto -->
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title fw-bold text-primary">@Model.Nombre</h4>
+                <hr />
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Tipo de Producto</dt>
+                    <dd class="col-sm-8">@Model.TipoProducto</dd>
+
+                    <dt class="col-sm-4">Descripción</dt>
+                    <dd class="col-sm-8">@Model.Descripcion</dd>
+
+                    <dt class="col-sm-4">Precio</dt>
+                    <dd class="col-sm-8 text-success fw-semibold">@($"S/. {Model.Precio.ToString("F2")}")</dd>
+
+                    <dt class="col-sm-4">Stock Disponible</dt>
+                    <dd class="col-sm-8">@Model.Stock</dd>
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+
+            <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+
+            <button type="submit" class="btn btn-danger rounded-pill px-4 me-2">
+                <i class="bi bi-trash"></i> Eliminar
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    h1 {
+        font-weight: 700;
+        color: #c0392b;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+    }
+
+    dl dt {
+        font-weight: 600;
+        color: #34495e;
+    }
+
+    dl dd {
+        color: #2c3e50;
+    }
+
+    .btn {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+</style>

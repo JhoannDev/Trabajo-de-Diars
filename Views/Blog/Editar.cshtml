@@ -1,0 +1,9 @@
+﻿@model Proyecto.Models.Blog
+
+@{
+    ViewData["Title"] = "Editar Blog";
+}
+
+<h2 class="mb-4">✏️ Editar Blog</h2>
+
+@await Html.PartialAsync("_FormularioBlog", Model)

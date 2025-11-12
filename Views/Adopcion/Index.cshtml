@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Proyecto.Models.Mascota>
+
+@{
+    ViewData["Title"] = "Adopta un Amigo";
+}
+
+<div class="container my-4">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-8">
+            <form asp-controller="Adopcion" asp-action="Index" method="get" class="d-flex">
+                <input class="form-control me-2"
+                       type="search"
+                       placeholder="Buscar por nombre, especie o raza..."
+                       name="filtroBusqueda"
+                       aria-label="Buscar">
+                <button class="btn btn-outline-primary" type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            @foreach (var mascota in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (string.IsNullOrEmpty(mascota.FotoUrl))
+                        {
+                            <img src="https://via.placeholder.com/400x300.png?text=Foto+Mascota"
+                                 class="card-img-top"
+                                 alt="Foto no disponible"
+                                 style="height: 250px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="@mascota.FotoUrl"
+                                 class="card-img-top"
+                                 alt="Foto de @mascota.Nombre"
+                                 style="height: 250px; object-fit: cover;">
+                        }
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold">@mascota.Nombre</h5>
+                            <p class="card-text">
+                                <strong>Especie:</strong> @mascota.Especie <br>
+                                <strong>Raza:</strong> @mascota.Raza <br>
+                                <strong>Edad:</strong> @mascota.Edad años
+                            </p>
+                        </div>
+
+                        <div class="card-footer bg-white border-top-0 text-center">
+                            <a asp-action="Details" asp-route-id="@mascota.Id" class="btn btn-primary w-100">
+                                ¡Conóceme!
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center alert alert-warning">
+            <p>No se encontraron mascotas que coincidan con tu búsqueda.</p>
+        </div>
+    }
+
+</div>
