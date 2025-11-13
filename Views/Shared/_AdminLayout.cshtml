@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Proyecto.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fortawesome/fontawesome-free@6.6.0/css/all.min.css" />
+
+    <style>
+        .admin-wrapper {
+            display: flex;
+            height: calc(100vh - 56px); /* Altura completa menos el navbar */
+        }
+
+        .sidebar {
+            width: 240px; /* Ancho que ya teníamos */
+            transition: all 0.3s;
+        }
+
+        .admin-content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto; /* Scroll solo en el contenido */
+            background-color: #f4f7f6; /* Fondo de contenido (un gris muy claro) */
+        }
+
+        .sidebar .nav-link {
+            font-size: 0.95rem;
+            padding: .6rem 1rem;
+        }
+
+            /* Estilo para el link activo (se mantiene igual) */
+            .sidebar .nav-link.active {
+                background-color: #0d6efd;
+                color: white !important; /* Importante para sobreescribir */
+                font-weight: 500;
+            }
+
+        /* Media query para ocultar sidebar de desktop en móvil */
+        @@media (max-width: 991.98px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    @{
+        string currentController = ViewContext.RouteData.Values["controller"].ToString();
+        string currentAction = ViewContext.RouteData.Values["action"].ToString();
+    }
+
+    <header>
+        <nav class="navbar navbar-dark bg-dark shadow-sm p-2">
+            <div class="container-fluid">
+                <button class="navbar-toggler d-lg-none" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar"
+                        aria-controls="mobileSidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand fw-bold d-none d-lg-block" asp-controller="Admin" asp-action="Index">
+                    Panel de Administrador
+                </a>
+
+                <a class="btn btn-outline-danger" asp-controller="Login" asp-action="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="d-none d-md-inline ms-1">Salir</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-wrapper">
+
+        <nav class="sidebar bg-dark p-3 d-none d-lg-block shadow">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Admin" && currentAction == "Index" ? "active" : "text-white")"
+                       asp-controller="Admin" asp-action="Index">
+                        <i class="bi bi-grid-fill me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Admin" && currentAction == "Postulaciones" ? "active" : "text-white")"
+                       asp-controller="Admin" asp-action="Postulaciones">
+                        <i class="bi bi-clipboard-check me-2"></i> Postulaciones
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Mascotas" ? "active" : "text-white")"
+                       asp-controller="Mascotas" asp-action="Index">
+                        <i class="bi bi-heart me-2"></i> Mascotas
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Productos" ? "active" : "text-white")"
+                       asp-controller="Productos" asp-action="Index">
+                        <i class="bi bi-cart me-2"></i> Productos
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Blog" ? "active" : "text-white")"
+                       asp-controller="Blog" asp-action="Index">
+                        <i class="bi bi-newspaper me-2"></i> Blog
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Organizaciones" ? "active" : "text-white")"
+                       asp-controller="Organizaciones" asp-action="Index">
+                        <i class="bi bi-house-door me-2"></i> Organizaciones
+                    </a>
+                </li>
+                <li><hr class="text-secondary"></li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-globe me-2"></i> Volver a la web pública
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="admin-content">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <div class="offcanvas offcanvas-start bg-dark" data-bs-theme="dark" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="mobileSidebarLabel">Menú de Gestión</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Admin" && currentAction == "Index" ? "active" : "text-white")"
+                       asp-controller="Admin" asp-action="Index">
+                        <i class="bi bi-grid-fill me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Admin" && currentAction == "Postulaciones" ? "active" : "text-white")"
+                       asp-controller="Admin" asp-action="Postulaciones">
+                        <i class="bi bi-clipboard-check me-2"></i> Postulaciones
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Mascotas" ? "active" : "text-white")"
+                       asp-controller="Mascotas" asp-action="Index">
+                        <i class="bi bi-heart me-2"></i> Mascotas
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Productos" ? "active" : "text-white")"
+                       asp-controller="Productos" asp-action="Index">
+                        <i class="bi bi-cart me-2"></i> Productos
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Blog" ? "active" : "text-white")"
+                       asp-controller="Blog" asp-action="Index">
+                        <i class="bi bi-newspaper me-2"></i> Blog
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link @(currentController == "Organizaciones" ? "active" : "text-white")"
+                       asp-controller="Organizaciones" asp-action="Index">
+                        <i class="bi bi-house-door me-2"></i> Organizaciones
+                    </a>
+                </li>
+                <li><hr class="text-secondary"></li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-globe me-2"></i> Volver a la web pública
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

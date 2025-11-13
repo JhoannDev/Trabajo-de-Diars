@@ -10,6 +10,15 @@ namespace Proyecto.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Adopcion>()
+                .Property(a => a.Id)
+                .UseIdentityColumn();
+        }
+
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Mascota> Mascotas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }

@@ -7,7 +7,20 @@
 <div class="container my-5">
     <div class="row">
         <div class="col-md-6">
-            <img src="https://via.placeholder.com/600x500.png?text=Foto+de+@Model.Nombre" class="img-fluid rounded shadow" alt="Foto de @Model.Nombre">
+            <div class="card shadow-sm border-0">
+                @if (string.IsNullOrEmpty(Model.FotoUrl))
+                {
+                    <img src="https://via.placeholder.com/600x500.png?text=Foto+de+@Model.Nombre"
+                         class="img-fluid rounded" alt="Foto no disponible">
+                }
+                else
+                {
+                    <img src="@Model.FotoUrl"
+                         class="img-fluid rounded"
+                         alt="Foto de @Model.Nombre"
+                         style="object-fit: cover; max-height: 500px; width: 100%;">
+                }
+            </div>
         </div>
         <div class="col-md-6">
             <h1 class="display-4">@Model.Nombre</h1>

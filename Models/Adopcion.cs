@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-    
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Proyecto.Models
 {
         public class Adopcion
         {
+            [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
             public int Id { get; set; }
 
             [Display(Name = "Estado de la Postulación")]

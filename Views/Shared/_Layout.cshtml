@@ -47,24 +47,29 @@
 
                             @if (!string.IsNullOrEmpty(userName))
                             {
-                                <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle"></i>
-                                    @($"{userName} ({userRole})")
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end shadow">
-                                    <li><a class="dropdown-item" asp-controller="Mascotas" asp-action="Index">🐾 Gestión de Mascotas</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Productos" asp-action="Index">🛍️ Gestión de Productos</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Blog" asp-action="Index">📰 Gestión del Blog</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Organizaciones" asp-action="Index">🏠 Gestión de Organizaciones</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Adopcion" asp-action="Postulaciones">📋 Postulaciones</a></li>
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li>
-                                        <a class="dropdown-item text-danger fw-semibold" asp-controller="Login" asp-action="Logout">
-                                            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-                                        </a>
-                                    </li>
-                                </ul>
+                                @if (userRole == "Administrador")
+                                {
+                                    <a class="nav-link btn btn-success text-white fw-semibold px-3 rounded"
+                                       asp-controller="Admin" asp-action="Index">
+                                        <i class="bi bi-grid-fill"></i> Dashboard
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-person-circle"></i>
+                                        @($"{userName} ({userRole})")
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li>
+                                            <a class="dropdown-item text-danger fw-semibold" asp-controller="Login" asp-action="Logout">
+                                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                                            </a>
+                                        </li>
+                                    </ul>
+                                }
                             }
                             else
                             {

@@ -1,56 +1,127 @@
-﻿@model IEnumerable<Proyecto.Models.Adopcion>
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model IEnumerable<Proyecto.Models.Adopcion>
 
 @{
     ViewData["Title"] = "Revisión de Postulaciones";
 }
 
-<h1>@ViewData["Title"]</h1>
-<p>Aquí puedes ver las postulaciones enviadas por los usuarios.</p>
+<h1 class="mb-3">Revisión de Postulaciones</h1>
 
-<table class="table table-striped">
-    <thead>
+<table class="table table-striped table-hover align-middle shadow-sm">
+    <thead class="table-primary">
         <tr>
-            <th>
-                Mascota
-            </th>
-            <th>
-                Nombre Postulante
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Teléfono
-            </th>
-            <th>
-                Fecha
-            </th>
-            <th></th>
+            <th>Mascota</th>
+            <th>Nombre Postulante</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th class="text-center" style="width: 200px;">Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mascota.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombrePostulante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailPostulante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TelefonoPostulante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaPostulacion)
-                </td>
-                <td>
-                    <a asp-action="DetallePostulacion" asp-route-id="@item.Id" class="btn btn-info btn-sm">Ver Motivo</a>
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Mascota.Nombre</td>
+            <td>@item.NombrePostulante</td>
+            <td>@item.EmailPostulante</td>
+            <td>@item.TelefonoPostulante</td>
+            <td>@item.FechaPostulacion.ToShortDateString()</td>
+            
+            <td>
+                @if (item.Estado == "Aprobado")
+                {
+                    <span class="badge bg-success">@item.Estado</span>
+                }
+                else if (item.Estado == "Rechazado")
+                {
+                    <span class="badge bg-danger">@item.Estado</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark">@item.Estado</span>
+                }
+            </td>
+
+            <td class="text-center">
+                
+                @if (item.Estado == "Enviado")
+                {
+
+                    <button type="button" class="btn btn-sm btn-info rounded-3 me-1" 
+                          data-bs-toggle="modal" 
+                          data-bs-target="#motivoModal"
+                          data-bs-motivo="@item.Motivo"
+                          data-bs-nombre="@item.NombrePostulante">
+                       <i class="bi bi-eye"></i> Ver Motivo
+                    </button>
+                    <form asp-action="Aprobar" asp-route-id="@item.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-success rounded-3 me-1">
+                            <i class="bi bi-check-circle"></i> Aprobar
+                        </button>
+                    </form>
+
+                    <form asp-action="Rechazar" asp-route-id="@item.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger rounded-3">
+                            <i class="bi bi-x-circle"></i> Rechazar
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-action="DetallePostulacion" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-3">
+                        <i class="bi bi-eye"></i> Ver Detalles
+                    </a>
+                }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
+
+<div class="modal fade" id="motivoModal" tabindex="-1" aria-labelledby="motivoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="motivoModalLabel">Motivo de Postulación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted">Motivo de <strong id="modalNombrePostulante"></strong>:</p>
+                <p id="modalMotivoTexto" style="white-space: pre-wrap;"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            var motivoModal = document.getElementById('motivoModal');
+            
+            motivoModal.addEventListener('show.bs.modal', function (event) {
+                
+                var button = event.relatedTarget;
+                
+                var motivo = button.getAttribute('data-bs-motivo');
+                var nombre = button.getAttribute('data-bs-nombre');
+
+                var modalTitle = motivoModal.querySelector('.modal-title');
+                var modalBodyText = motivoModal.querySelector('#modalMotivoTexto');
+                var modalNombre = motivoModal.querySelector('#modalNombrePostulante');
+
+                modalTitle.textContent = 'Motivo de ' + nombre;
+                modalNombre.textContent = nombre;
+                modalBodyText.textContent = motivo;
+            });
+        });
+    </script>
+}
