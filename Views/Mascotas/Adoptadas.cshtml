@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Proyecto.Models.Mascota>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Mascotas Adoptadas";
+}
+
+<h2 class="mb-4 text-center">Mascotas Adoptadas</h2>
+<div class="text-start mt-3 mb-4">
+    <a asp-controller="Mascotas" asp-action="Index" class="btn btn-dark rounded-3 px-4">
+         <i class="bi bi-arrow-left"></i> Volver a Gestionar
+    </a>
+</div>
+<div class="row">
+    @foreach (var mascota in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm border-0 rounded-4" style="overflow: hidden;">
+
+                    <!-- Imagen -->
+                    <div style="position: relative;">
+                        <img src="@mascota.FotoUrl"
+                             class="w-100"
+                             style="height: 180px; object-fit: cover; filter: grayscale(100%); opacity: 0.8;">
+
+                        <span style="
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: rgba(52, 152, 219, 0.35);
+                        border: 2px solid rgba(52, 152, 219, 0.9);
+                        padding: 6px 18px;
+                        border-radius: 10px;
+                        color:white;
+                        font-weight: 600;
+                        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+                        ">
+                            ADOPTADO
+                        </span>
+                    </div>
+
+                <!-- Información -->
+                <div class="card-body" style="font-size: 14px;">
+                    <h5 class="card-title fw-bold">@mascota.Nombre</h5>
+
+                    <a asp-controller="Mascotas"
+                       asp-action="DetallesAdopcion"
+                       asp-route-id="@mascota.Id"
+                           class="btn btn-dark w-100 rounded-3"
+                       style="font-size: 13px; padding: 6px;">
+                        Detalles de Adopción
+                        <i class="bi bi-file-earmark-text ms-2"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+     }
+ </div>

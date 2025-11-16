@@ -1,0 +1,59 @@
+﻿@model Proyecto.Models.Adopcion
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Detalles de Adopción";
+}
+
+<h2 class="mb-4">Detalles de Adopción:</h2>
+
+<a asp-action="Adoptadas" class="btn btn-dark mb-3">
+    <i class="bi bi-arrow-left"></i> Volver a Mascotas Adoptadas
+</a>
+
+<div class="card shadow-sm p-4">
+
+    <h4 class="text-primary mb-3">- Información de la Mascota</h4>
+    <hr />
+
+    <div class="row mb-4">
+        <div class="col-md-4 text-center">
+            @if (string.IsNullOrEmpty(Model.Mascota.FotoUrl))
+            {
+                    <img src="https://via.placeholder.com/300x220?text=Mascota"
+                         class="img-fluid rounded shadow-sm" />
+            }
+            else
+            {
+                    <img src="@Model.Mascota.FotoUrl"
+                         class="img-fluid rounded shadow-sm" />
+            }
+        </div>
+
+        <div class="col-md-8">
+            <p><strong>Nombre:</strong> @Model.Mascota.Nombre</p>
+            <p><strong>Especie:</strong> @Model.Mascota.Especie</p>
+            <p><strong>Raza:</strong> @Model.Mascota.Raza</p>
+            <p><strong>Edad:</strong> @Model.Mascota.Edad años</p>
+            <p><strong>Estado de Adopción:</strong> @Model.Mascota.EstadoAdopcion</p>
+        </div>
+    </div>
+
+    <h4 class="text-success mb-3">- Información del Adoptante</h4>
+    <hr />
+
+    <p><strong>Nombre Completo:</strong> @Model.NombrePostulante</p>
+    <p><strong>Correo Electrónico:</strong> @Model.EmailPostulante</p>
+    <p><strong>Teléfono:</strong> @Model.TelefonoPostulante</p>
+
+    <p class="mt-3"><strong>Fecha de Adopción: </strong>  
+        @Model.FechaAdopcion?.ToString("dd/MM/yyyy hh:mm tt")
+    </p>
+
+</div>
+
+<style>
+    .card img {
+        max-height: 250px;
+        object-fit: cover;
+    }
+</style>

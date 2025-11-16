@@ -9,7 +9,7 @@ namespace Proyecto.Models
         public string Especie {  get; set; }
         public string Raza {  get; set; }
         public int Edad {  get; set; }
-        public string EstadoAdopcion {  get; set; }
+        public string EstadoAdopcion {  get; set; } = "SIN ADOPTAR";
         public string? FotoUrl { get; set; }
     }
 }

@@ -1,6 +1,10 @@
 ﻿@model Proyecto.Models.Mascota
 
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+
     ViewData["Title"] = "Editar Mascota";
 }
 
@@ -39,14 +43,13 @@
                         <span asp-validation-for="Edad" class="text-danger"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="EstadoAdopcion" class="form-label fw-semibold">Estado de Adopción</label>
-                        <select asp-for="EstadoAdopcion" class="form-select">
-                            <option value="SinAdoptar">Sin Adoptar</option>
-                            <option value="EnProceso">En Proceso</option>
-                            <option value="Adoptado">Adoptado</option>
+                    <div class="form-group mb-3">
+                        <label for="EstadoAdopcion" class="control-label">Estado de Adopción</label>
+                        <select asp-for="EstadoAdopcion" class="form-control">
+                            <option value="SIN ADOPTAR" selected="@(Model.EstadoAdopcion == "SIN ADOPTAR")">SIN ADOPTAR</option>
+                            <option value="EN PROCESO" selected="@(Model.EstadoAdopcion == "EN PROCESO")">SIN ADOPTAR</option>
+                            <option value="ADOPTADO" selected="@(Model.EstadoAdopcion == "ADOPTADO")">ADOPTADO</option>
                         </select>
-                        <span asp-validation-for="EstadoAdopcion" class="text-danger"></span>
                     </div>
 
                     <div class="mb-4">

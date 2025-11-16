@@ -29,5 +29,7 @@ namespace Proyecto.Models
 
             [Display(Name = "¿Por qué deseas adoptar a esta mascota?")]
             public string Motivo { get; set; }
+
+            public DateTime? FechaAdopcion { get; set; }
         }
 }

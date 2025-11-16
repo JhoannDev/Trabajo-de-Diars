@@ -39,13 +39,13 @@ namespace Proyecto.Controllers
                 return NotFound();
             }
 
-            // 1. Actualiza la postulación
-            postulacion.Estado = "Aprobado";
-
+            // 1. Actualiza la postulación y fecha de adopción
+            postulacion.Estado = "APROBADO";
+            postulacion.FechaAdopcion = DateTime.Now;
             // 2. Actualiza la mascota
             if (postulacion.Mascota != null)
             {
-                postulacion.Mascota.EstadoAdopcion = "Adoptado";
+                postulacion.Mascota.EstadoAdopcion = "ADOPTADO";
             }
 
             // 3. Guarda los cambios
@@ -68,12 +68,12 @@ namespace Proyecto.Controllers
             }
 
             // 1. Actualiza la postulación
-            postulacion.Estado = "Rechazado";
+            postulacion.Estado = "RECHAZADO";
 
             // 2. Devuelve la mascota a "Disponible"
             if (postulacion.Mascota != null)
             {
-                postulacion.Mascota.EstadoAdopcion = "Disponible";
+                postulacion.Mascota.EstadoAdopcion = "SIN ADOPTAR";
             }
 
             // 3. Guarda los cambios

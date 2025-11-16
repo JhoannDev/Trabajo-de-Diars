@@ -16,22 +16,24 @@ namespace SistemaAdopcion.Controllers
 
         public async Task<IActionResult> Index(string filtroBusqueda)
         {
-            var mascotasQuery = _context.Mascotas.AsQueryable();
+            // Mostramos solo SIN ADOPTAR y EN PROCESO
+            var query = _context.Mascotas
+                .Where(m => m.EstadoAdopcion != "ADOPTADO")
+                .AsQueryable();
 
-            if (!String.IsNullOrEmpty(filtroBusqueda))
+            if (!string.IsNullOrWhiteSpace(filtroBusqueda))
             {
-                mascotasQuery = mascotasQuery.Where(m =>
-                    m.Nombre.Contains(filtroBusqueda) ||
-                    m.Especie.Contains(filtroBusqueda) ||
-                    m.Raza.Contains(filtroBusqueda));
+                filtroBusqueda = filtroBusqueda.Trim().ToUpper();
+
+                query = query.Where(m =>
+                    m.Nombre.ToUpper().Contains(filtroBusqueda) ||
+                    m.Especie.ToUpper().Contains(filtroBusqueda) ||
+                    m.Raza.ToUpper().Contains(filtroBusqueda));
             }
 
-            var mascotas = await mascotasQuery
-                .OrderBy(m => m.EstadoAdopcion.ToUpper() == "SIN ADOPTAR" ? 0 : 1)
-                .ThenBy(m => m.Nombre)
-                .ToListAsync();
+            var lista = await query.ToListAsync();
 
-            return View(mascotas);
+            return View(lista);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -66,7 +68,7 @@ namespace SistemaAdopcion.Controllers
 
             if (ModelState.IsValid)
             {
-                // --- INICIO DE LA NUEVA SOLUCIÓN: TRANSACCIÓN y SQL CRudo ---
+                // --- INICIO DE LA NUEVA SOLUCIÓN: TRANSACCIÓN y SQL crudo ---
 
                 // Usamos una transacción para asegurar que ambas tablas 
                 // se actualicen (Mascotas y Adopciones) o ninguna lo haga.
@@ -85,7 +87,7 @@ namespace SistemaAdopcion.Controllers
                         }
 
                         // Actualizamos la mascota a "En Proceso"
-                        mascota.EstadoAdopcion = "En Proceso";
+                        mascota.EstadoAdopcion = "EN PROCESO";
                         _context.Update(mascota);
                         await _context.SaveChangesAsync(); // Guardamos el cambio de la mascota
 
@@ -129,13 +131,12 @@ namespace SistemaAdopcion.Controllers
                         return View(adopcion);
                     }
                 }
-                // --- FIN DE LA NUEVA SOLUCIÓN ---
+                // --- FIN DE SOLUCIÓN DE POSTULACION---
             }
 
             // Si el ModelState no fue válido, regresa a la vista
             return View(adopcion);
         }
-
         public IActionResult PostulacionEnviada()
         {
             return View();

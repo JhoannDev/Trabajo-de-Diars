@@ -1,5 +1,7 @@
 ﻿@model Proyecto.Models.Mascota
-
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewData["Title"] = "Registrar Mascota";
 }
@@ -38,15 +40,13 @@
                     <span asp-validation-for="Edad" class="text-danger"></span>
                 </div>
 
+                 <!-- Estado de adopción (solo texto, no editable) -->
                 <div class="col-md-3 mb-3">
-                    <label asp-for="EstadoAdopcion" class="form-label fw-semibold">Estado de Adopción</label>
-                    <select asp-for="EstadoAdopcion" class="form-select rounded-3">
-                        <option value="">Seleccione...</option>
-                        <option>Sin adoptar</option>
-                        <option>En proceso</option>
-                        <option>Adoptado</option>
-                    </select>
-                    <span asp-validation-for="EstadoAdopcion" class="text-danger"></span>
+                    <label class="form-label fw-semibold">Estado de Adopción</label>
+                    <input type="text" value="SIN ADOPTAR" class="form-control rounded-3 bg-light fw-bold" disabled />
+
+                    <!-- Se envía al servidor -->
+                    <input type="hidden" asp-for="EstadoAdopcion" value="SIN ADOPTAR" />
                 </div>
 
                 <div class="col-md-6 mb-4">
