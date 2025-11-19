@@ -25,7 +25,6 @@ namespace Proyecto.Data
         public DbSet<Donacion> Donaciones { get; set; }
         public DbSet<Adopcion> Adopciones { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
     }

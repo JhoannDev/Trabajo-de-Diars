@@ -82,12 +82,26 @@ body {
   margin-bottom: 60px;
 }
 
-.menu-hover {
-    transition: background-color 0.2s ease-in-out, padding 0.2s;
-    border-radius: 6px;
-    padding: 6px 12px;
+/* Hover para los enlaces del menú superior */
+.navbar .nav-link {
+    color: white !important;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 8px;
+    padding: 8px 14px;
 }
 
-.menu-hover:hover {
-    background-color: #4dabf7; /* Celeste suave */
+.navbar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important; /* celeste suave */
+    color: #ffffff !important;
+}
+
+/* Animación de zoom para los íconos del navbar */
+.navbar .nav-link i {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.85;
+}
+
+.navbar .nav-link:hover i {
+    transform: scale(1.1);
+    opacity: 1;
 }

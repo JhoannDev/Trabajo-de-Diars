@@ -32,12 +32,43 @@
 
                 <div class="collapse navbar-collapse" id="navbarMain">
 
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active fw-semibold" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-controller="Adopcion" asp-action="Index">Adoptar</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-controller="Tienda" asp-action="Index">Tienda</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-controller="Blog" asp-action="Index">Blog Educativo</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-semibold" asp-controller="Organizaciones" asp-action="Index">Organizaciones Aliadas</a></li>
+                   <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <!-- INICIO -->
+                        <li class="nav-item me-3">
+                            <a class="nav-link fw-semibold text-white" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-house me-1"></i> Inicio
+                            </a>
+                        </li>
+
+                        <!-- ADOPTAR -->
+                        <li class="nav-item me-3">
+                            <a class="nav-link fw-semibold text-white" asp-controller="Adopcion" asp-action="Index">
+                                <i class="fa-solid fa-dog me-1"></i> Adoptar
+                            </a>
+                        </li>
+
+                        <!-- TIENDA -->
+                        <li class="nav-item me-3">
+                            <a class="nav-link fw-semibold text-white" asp-controller="Tienda" asp-action="Index">
+                                <i class="fa-solid fa-shop me-1"></i> Tienda
+                            </a>
+                        </li>
+
+                        <!-- BLOG EDUCATIVO -->
+                        <li class="nav-item me-3">
+                            <a class="nav-link fw-semibold text-white" asp-controller="Blog" asp-action="Index">
+                                <i class="fa-solid fa-book-open me-1"></i> Blog Educativo
+                            </a>
+                        </li>
+
+                        <!-- ORGANIZACIONES ALIADAS -->
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-white" asp-controller="Organizaciones" asp-action="Index">
+                                <i class="fa-solid fa-handshake-angle me-1"></i> Organizaciones Aliadas
+                            </a>
+                        </li>
+
                     </ul>
 
                     <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
