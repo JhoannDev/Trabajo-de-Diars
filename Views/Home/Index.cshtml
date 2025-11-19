@@ -63,34 +63,40 @@
 
     <div class="row g-4 mb-5">
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
+            <div class="card shadow-sm text-center h-100">
                 <div class="card-body">
                     <i class="bi bi-egg-fried" style="font-size: 3rem; color: #0d6efd;"></i>
                     <h4 class="card-title mt-3">Alimentos</h4>
-                    <p class="card-text">Nutrición balanceada para todas las etapas de su vida.</p>
-                    <a asp-controller="Tienda" asp-action="Index" class="btn btn-primary">Ver Alimentos</a>
+                    <p class="card-text text-muted">Nutrición balanceada para todas las etapas de su vida.</p>
+
+                    <a asp-controller="Tienda" asp-action="Index" asp-route-filtroBusqueda="Alimentos"
+                       class="btn btn-primary">Ver Alimentos</a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
+            <div class="card shadow-sm text-center h-100">
                 <div class="card-body">
                     <i class="bi bi-joystick" style="font-size: 3rem; color: #0d6efd;"></i>
                     <h4 class="card-title mt-3">Juguetes</h4>
-                    <p class="card-text">Horas de diversión asegurada para tu mejor amigo.</p>
-                    <a asp-controller="Tienda" asp-action="Index" class="btn btn-primary">Ver Juguetes</a>
+                    <p class="card-text text-muted">Horas de diversión asegurada para tu mejor amigo.</p>
+
+                    <a asp-controller="Tienda" asp-action="Index" asp-route-filtroBusqueda="Juguetes"
+                       class="btn btn-primary">Ver Juguetes</a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card shadow-sm text-center">
+            <div class="card shadow-sm text-center h-100">
                 <div class="card-body">
                     <i class="bi bi-bandaid" style="font-size: 3rem; color: #0d6efd;"></i>
                     <h4 class="card-title mt-3">Salud y Cuidado</h4>
-                    <p class="card-text">Todo lo que necesitas para mantenerlo sano y feliz.</p>
-                    <a asp-controller="Tienda" asp-action="Index" class="btn btn-primary">Ver Cuidado</a>
+                    <p class="card-text text-muted">Todo lo que necesitas para mantenerlo sano y feliz.</p>
+
+                    <a asp-controller="Tienda" asp-action="Index" asp-route-filtroBusqueda="Cuidado"
+                       class="btn btn-primary">Ver Cuidado</a>
                 </div>
             </div>
         </div>

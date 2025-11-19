@@ -13,7 +13,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<UsuarioService>();
-builder.Services.AddSession();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // El carrito dura 30 min si no lo usan
+    options.Cookie.HttpOnly = true; // Más seguro
+    options.Cookie.IsEssential = true; // Necesario para que funcione siempre
+});
 
 var app = builder.Build();
 

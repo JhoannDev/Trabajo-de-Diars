@@ -14,17 +14,29 @@ namespace Proyecto.Controllers
         }
         public async Task<IActionResult> Index(string filtroBusqueda)
         {
-            var productosQuery = _context.Productos.AsQueryable();
+            var productos = from p in _context.Productos
+                            select p;
 
             if (!String.IsNullOrEmpty(filtroBusqueda))
             {
-                productosQuery = productosQuery.Where(p =>
-                    p.Nombre.Contains(filtroBusqueda) ||
-                    p.Descripcion.Contains(filtroBusqueda));
+                productos = productos.Where(s =>
+                    s.Nombre.Contains(filtroBusqueda) ||
+                    s.Descripcion.Contains(filtroBusqueda) ||
+                    s.TipoProducto.Contains(filtroBusqueda));
             }
 
-            var productos = await productosQuery.ToListAsync();
-            return View(productos);
+            return View(await productos.ToListAsync());
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var producto = await _context.Productos.FindAsync(id);
+
+            if (producto == null) return NotFound();
+
+            return View(producto);
         }
     }
 }

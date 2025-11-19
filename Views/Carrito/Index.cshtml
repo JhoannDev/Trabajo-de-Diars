@@ -1,0 +1,87 @@
+﻿@model List<Proyecto.Models.CarritoItem>
+
+@{
+    ViewData["Title"] = "Mi Carrito de Compras";
+    decimal granTotal = Model.Sum(x => x.Total);
+}
+
+<div class="container my-5">
+    <h2 class="mb-4 text-primary"><i class="bi bi-cart4"></i> Tu Carrito</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info text-center">
+            <h4>Tu carrito está vacío</h4>
+            <a asp-controller="Tienda" asp-action="Index" class="btn btn-primary mt-3">Ir a la Tienda</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cant.</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="@(string.IsNullOrEmpty(item.FotoUrl) ? "/images/placeholder.jpg" : item.FotoUrl)"
+                                                     style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3">
+                                                <span>@item.Nombre</span>
+                                            </div>
+                                        </td>
+                                        <td>S/ @item.Precio.ToString("0.00")</td>
+                                        <td>@item.Cantidad</td>
+                                        <td class="fw-bold">S/ @item.Total.ToString("0.00")</td>
+                                        <td>
+                                            <a asp-action="Eliminar" asp-route-id="@item.ProductoId" class="text-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 bg-light">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Resumen</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal</span>
+                            <span class="fw-bold">S/ @granTotal.ToString("0.00")</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="fs-5 fw-bold">Total</span>
+                            <span class="fs-5 fw-bold text-primary">S/ @granTotal.ToString("0.00")</span>
+                        </div>
+
+                        <a href="#" class="btn btn-success w-100 btn-lg">
+                            Proceder al Pago
+                        </a>
+
+                        <a asp-controller="Tienda" asp-action="Index" class="btn btn-link w-100 mt-2 text-decoration-none">
+                            Seguir comprando
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

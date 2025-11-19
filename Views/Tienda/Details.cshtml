@@ -1,0 +1,70 @@
+﻿@model Proyecto.Models.Producto
+
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<div class="container my-5">
+    <div class="card border-0 shadow-sm">
+        <div class="row g-0">
+
+            <div class="col-md-6 p-5 d-flex align-items-center justify-content-center bg-white">
+                @if (string.IsNullOrEmpty(Model.FotoUrl))
+                {
+                    <img src="https://via.placeholder.com/500" class="img-fluid" alt="Sin imagen">
+                }
+                else
+                {
+                    <img src="@Model.FotoUrl" class="img-fluid" alt="@Model.Nombre" style="max-height: 500px;">
+                }
+            </div>
+
+            <div class="col-md-6 bg-light p-5">
+                <span class="text-muted text-uppercase small">@Model.TipoProducto</span>
+
+                <h1 class="fw-bold mb-2">@Model.Nombre</h1>
+
+                <p class="text-muted small mb-4">SKU: PROD-@Model.Id</p>
+
+                <h2 class="text-primary fw-bold mb-4 display-5">S/ @Model.Precio.ToString("0.00")</h2>
+
+                <form asp-controller="Carrito" asp-action="Agregar" method="post">
+
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <div class="d-flex align-items-center gap-3 mb-4">
+
+                        <div class="input-group" style="width: 140px;">
+                            <span class="input-group-text bg-white border-secondary">Cant.</span>
+                            <input type="number" name="cantidad" class="form-control text-center border-secondary"
+                                   value="1" min="1" max="@Model.Stock">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg px-4 rounded-pill flex-grow-1 shadow-sm"
+                                @(Model.Stock < 1 ? "disabled" : "")>
+                            <i class="bi bi-cart-plus me-2"></i>
+                            @(Model.Stock < 1 ? "Agotado" : "Añadir al carrito")
+                        </button>
+                    </div>
+                </form>
+                <hr class="text-muted">
+
+                <div class="mt-4">
+                    <h5 class="fw-bold">Descripción</h5>
+                    <p class="text-muted" style="white-space: pre-wrap;">@Model.Descripcion</p>
+                </div>
+
+                <div class="mt-3">
+                    @if (Model.Stock > 0)
+                    {
+                        <span class="badge bg-success fs-6">Stock Disponible: @Model.Stock</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary fs-6">Agotado</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
