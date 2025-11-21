@@ -1,0 +1,65 @@
+﻿@model Proyecto.Models.Blog
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Nueva Entrada de Blog";
+}
+
+<div class="container my-4">
+
+    <h2 class="text-primary mb-4">
+        <i class="bi bi-plus-circle me-2"></i> Registrar Nuevo Blog
+    </h2>
+
+    <div class="card shadow-sm p-4">
+
+        <form asp-action="Create">
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Título</label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Fecha de Publicación</label>
+                <input asp-for="FechaPublicacion" type="date" class="form-control" />
+                <span asp-validation-for="FechaPublicacion" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Autor</label>
+                <input asp-for="Autor" class="form-control" />
+                <span asp-validation-for="Autor" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Contenido</label>
+                <textarea asp-for="Contenido" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Contenido" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Imagen (URL)</label>
+                <input asp-for="ImagenUrl" class="form-control" />
+                <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-success rounded-3 px-4 me-2 shadow-sm">
+                    <i class="bi bi-check-circle me-1"></i> Registrar
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary px-4 rounded-3 me-2">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Volver
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

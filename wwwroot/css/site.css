@@ -24,6 +24,14 @@ html {
     border: none;
 }
 
+/* Marco decorativo de huellitas para el banner */
+.banner-marco {
+    border: 20px solid transparent;
+    border-image: url('/images/huellas-border.png') 40 round;
+    border-radius: 20px;
+    overflow: hidden; /* para que la imagen del banner no sobresalga */
+}
+
 /* la clase table-primary en thead */
 .table.table-striped thead.table-primary th {
     background-color: #007bff;
@@ -104,4 +112,21 @@ body {
 .navbar .nav-link:hover i {
     transform: scale(1.1);
     opacity: 1;
+}
+
+/* Reduce el espacio superior después del navbar */
+.container.my-4 {
+    margin-top: 1.0rem !important; /* antes era 4rem */
+}
+
+/* Limitar el ancho para que no empuje el sidebar */
+.admin-content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Evitar que imágenes enormes rompan el layout */
+.admin-content-container img {
+    max-width: 100%;
+    height: auto;
 }

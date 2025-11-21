@@ -3,7 +3,7 @@ using Proyecto.Data;
 using Proyecto.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using System; // 👈 faltaba para DateTime
+using System;
 
 namespace Proyecto.Controllers
 {

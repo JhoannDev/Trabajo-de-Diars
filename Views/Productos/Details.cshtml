@@ -5,50 +5,61 @@
     ViewData["Title"] = "Detalles del Producto";
 }
 
-<h1 class="mb-4">Detalles del Producto</h1>
+<div class="admin-content-container">
 
-<div class="row align-items-start">
-    <!-- Imagen del producto -->
-    <div class="col-md-4 text-center mb-3">
-        @if (!string.IsNullOrEmpty(Model.FotoUrl))
-        {
-                <img src="@Model.FotoUrl" alt="@Model.Nombre" class="img-fluid shadow rounded" style="max-height: 280px; object-fit: cover;">
-        }
-        else
-        {
-                <div class="border rounded p-4 bg-light text-muted">Sin imagen disponible</div>
-        }
-    </div>
+    <h1 class="text-primary mb-4">
+        <i class="bi bi-eye-fill me-2"></i> Detalles del Producto
+    </h1>
 
-    <!-- Detalles del producto -->
-    <div class="col-md-8">
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
+    <div class="row g-4">
+
+        <!-- COLUMNA IZQUIERDA (DETALLES) -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 p-4">
                 <h4 class="card-title fw-bold text-primary">@Model.Nombre</h4>
                 <hr />
 
                 <dl class="row mb-0">
-                    <dt class="col-sm-4">Tipo de Producto</dt>
+                    <dt class="col-sm-4 fw-bold">Tipo de Producto</dt>
                     <dd class="col-sm-8">@Model.TipoProducto</dd>
 
-                    <dt class="col-sm-4">Descripción</dt>
+                    <dt class="col-sm-4 fw-bold">Descripción</dt>
                     <dd class="col-sm-8">@Model.Descripcion</dd>
 
-                    <dt class="col-sm-4">Precio</dt>
-                    <dd class="col-sm-8 text-success fw-semibold">@($"S/. {Model.Precio.ToString("F2")}")</dd>
+                    <dt class="col-sm-4 fw-bold">Precio</dt>
+                    <dd class="col-sm-8 text-success fw-semibold">
+                        @($"S/. {Model.Precio:F2}")
+                    </dd>
 
-                    <dt class="col-sm-4">Stock Disponible</dt>
+                    <dt class="col-sm-4 fw-bold">Stock Disponible</dt>
                     <dd class="col-sm-8">@Model.Stock</dd>
                 </dl>
             </div>
         </div>
-
+        <!-- COLUMNA DERECHA (IMAGEN) -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-3 text-center">
+                @if (!string.IsNullOrEmpty(Model.FotoUrl))
+                {
+                    <img src="@Model.FotoUrl"
+                         class="img-fluid rounded"
+                         style="max-height: 340px; object-fit: contain;" />
+                }
+                else
+                {
+                    <div class="border rounded p-4 bg-light text-muted">
+                        Sin imagen disponible
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- BOTONES -->
         <div class="mt-4">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-pill px-4 me-2">
-                <i class="bi bi-pencil-square"></i> Editar
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary rounded-3 px-4 me-2">
+                <i class="bi bi-pencil-square me-1"></i> Editar
             </a>
-            <a asp-action="Index" class="btn btn-secondary rounded-pill px-4">
-                <i class="bi bi-arrow-left"></i> Volver
+            <a asp-action="Index" class="btn btn-secondary rounded-3 px-4">
+                <i class="bi bi-arrow-left-circle me-1"></i> Volver
             </a>
         </div>
     </div>

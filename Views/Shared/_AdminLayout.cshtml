@@ -45,6 +45,10 @@
                 display: none;
             }
         }
+
+        .text-blue {
+            color: #00AAFF !important;
+        }
     </style>
 </head>
 <body>
@@ -103,8 +107,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link @(currentController == "Blog" ? "active" : "text-white")"
-                       asp-controller="Blog" asp-action="Index">
+                    <a class="nav-link @(currentController == "AdminBlog" ? "active" : "text-white")"
+                       asp-controller="AdminBlog" asp-action="Index">
                         <i class="bi bi-newspaper me-2"></i> Blog
                     </a>
                 </li>
@@ -116,8 +120,8 @@
                 </li>
                 <li><hr class="text-secondary"></li>
                 <li class="nav-item">
-                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-globe me-2"></i> Volver a la web pública
+                    <a class="nav-link text-blue" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-globe me-2"></i> Volver a la web pública - Inicio
                     </a>
                 </li>
             </ul>
@@ -161,8 +165,8 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link @(currentController == "Blog" ? "active" : "text-white")"
-                       asp-controller="Blog" asp-action="Index">
+                    <a class="nav-link @(currentController == "AdminBlog" ? "active" : "text-white")"
+                       asp-controller="AdminBlog" asp-action="Index">
                         <i class="bi bi-newspaper me-2"></i> Blog
                     </a>
                 </li>
@@ -174,8 +178,8 @@
                 </li>
                 <li><hr class="text-secondary"></li>
                 <li class="nav-item">
-                    <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-globe me-2"></i> Volver a la web pública
+                    <a class="nav-link text-blue" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-globe me-2"></i> Volver a la web pública - Inicio
                     </a>
                 </li>
             </ul>

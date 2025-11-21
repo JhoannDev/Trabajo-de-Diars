@@ -14,10 +14,65 @@
         text-align: center;
         color: white;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        /* BORDE MODERNO */
+        border-radius: 30px;
+        overflow: hidden;
+        position: relative;
+        margin: 20px auto;
     }
+
+        /* Borde exterior elegante */
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 4px;
+            background: linear-gradient(135deg, #ffffff80, #00000040);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+    /* Marco de patitas SOLO arriba y abajo */
+    .mascota-ideal-marco {
+        background: #ffffff;
+        padding: 50px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+        margin-top: 40px;
+        border: 1px solid #ccc; /* borde suave */
+        position: relative;
+        border-radius: 25px;
+        padding: 35px 25px;
+        overflow: hidden; /* evita que los bordes se salgan */
+    }
+
+        /* Patitas arriba */
+        .mascota-ideal-marco::before {
+            content: "🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            white-space: nowrap; /* evita saltos de línea */
+        }
+
+        /* Patitas abajo */
+        .mascota-ideal-marco::after {
+            content: "🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾   🐾";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            white-space: nowrap;
+        }
+
 </style>
 
-<div class="hero-section mb-5">
+<div class="hero-section">
     <div class="container">
         <h1 class="display-3 fw-bold">Bienvenido a "AdoptaPet"</h1>
         <p class="fs-4 col-md-8 mx-auto">
@@ -37,7 +92,7 @@
 
 <div class="container">
 
-    <div class="row p-5 mb-5 align-items-center bg-light rounded-3 shadow-sm">
+    <div class="row p-5 mb-5 mt-5 align-items-center bg-light rounded-3 shadow-sm mascota-ideal-marco">
         <div class="col-md-8">
             <h2 class="display-5 fw-bold">Descubre a tu Mascota Ideal</h2>
             <p class="fs-4 text-muted">
@@ -48,11 +103,11 @@
                 <i class="bi bi-search-heart"></i> Empieza a Adoptar
             </a>
         </div>
+
         <div class="col-md-4 text-center d-none d-md-block">
             <img src="~/images/mascota.webp" class="img-fluid rounded-circle shadow-sm" alt="Mascotas felices">
         </div>
     </div>
-
 
     <hr class="my-5">
 
