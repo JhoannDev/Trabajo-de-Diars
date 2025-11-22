@@ -24,7 +24,7 @@
             @foreach (var producto in Model)
             {
                 <div class="col">
-                    <div class="card h-100 border-0 shadow-sm">
+                    <div class="card h-100 shadow-sm product-card">
 
                         <a asp-action="Details" asp-route-id="@producto.Id" class="text-decoration-none">
                             <img src="@(string.IsNullOrEmpty(producto.FotoUrl) ? "/images/placeholder.jpg" : producto.FotoUrl)"

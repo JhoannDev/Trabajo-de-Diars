@@ -9,6 +9,7 @@ using Proyecto.Data;
 using Proyecto.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.Text.RegularExpressions;
 
 namespace Proyecto.Controllers
 {
@@ -67,24 +68,43 @@ namespace Proyecto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,TipoProducto,Descripcion,Precio,Stock")] Producto producto, IFormFile? foto)
+        public async Task<IActionResult> Create(
+        [Bind("Nombre,TipoProducto,Descripcion,Precio,Stock,FotoUrl")] Producto producto,
+        IFormFile? foto)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string productoPath = Path.Combine(wwwRootPath, "images", "productos");
+
+                if (!Directory.Exists(productoPath))
+                    Directory.CreateDirectory(productoPath);
+
                 if (foto != null)
                 {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string imagesPath = Path.Combine(wwwRootPath, "images", "productos");
+                    // Nombre original del archivo
+                    string originalName = Path.GetFileNameWithoutExtension(foto.FileName);
+                    string extension = Path.GetExtension(foto.FileName);
 
-                    if (!Directory.Exists(imagesPath))
-                        Directory.CreateDirectory(imagesPath);
+                    // Limpieza del nombre
+                    originalName = Regex.Replace(originalName, @"[^a-zA-Z0-9_-]", "_");
 
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(foto.FileName);
-                    string filePath = Path.Combine(imagesPath, fileName);
+                    // Nombre final
+                    string fileName = originalName + extension;
+                    string finalPath = Path.Combine(productoPath, fileName);
 
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    int counter = 1;
+                    while (System.IO.File.Exists(finalPath))
                     {
-                        await foto.CopyToAsync(fileStream);
+                        fileName = $"{originalName}_{counter}{extension}";
+                        finalPath = Path.Combine(productoPath, fileName);
+                        counter++;
+                    }
+
+                    // Guardar imagen
+                    using (var stream = new FileStream(finalPath, FileMode.Create))
+                    {
+                        await foto.CopyToAsync(stream);
                     }
 
                     producto.FotoUrl = "/images/productos/" + fileName;
@@ -92,6 +112,7 @@ namespace Proyecto.Controllers
 
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(producto);
@@ -116,30 +137,69 @@ namespace Proyecto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,TipoProducto,Descripcion,Precio,Stock,FotoUrl")] Producto producto, IFormFile? foto)
+        public async Task<IActionResult> Edit(int id,
+    [Bind("Id,Nombre,TipoProducto,Descripcion,Precio,Stock,FotoUrl")] Producto producto,
+    IFormFile? foto)
         {
             if (id != producto.Id)
                 return NotFound();
 
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string productosPath = Path.Combine(wwwRootPath, "images", "productos");
+
+                if (!Directory.Exists(productosPath))
+                    Directory.CreateDirectory(productosPath);
+
+                // Obtener datos actuales
+                var productoOriginal = await _context.Productos.AsNoTracking()
+                                         .FirstOrDefaultAsync(p => p.Id == producto.Id);
+
+                if (productoOriginal == null)
+                    return NotFound();
+
                 if (foto != null)
                 {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string imagesPath = Path.Combine(wwwRootPath, "images", "productos");
-                    if (!Directory.Exists(imagesPath)) Directory.CreateDirectory(imagesPath);
-
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(foto.FileName);
-                    string filePath = Path.Combine(imagesPath, fileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    // Borrar la imagen anterior
+                    if (!string.IsNullOrEmpty(productoOriginal.FotoUrl))
                     {
-                        await foto.CopyToAsync(fileStream);
+                        string oldPath = Path.Combine(wwwRootPath, productoOriginal.FotoUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(oldPath))
+                            System.IO.File.Delete(oldPath);
+                    }
+
+                    // Usar nombre original
+                    string originalName = Path.GetFileNameWithoutExtension(foto.FileName);
+                    string extension = Path.GetExtension(foto.FileName);
+
+                    originalName = Regex.Replace(originalName, @"[^a-zA-Z0-9_-]", "_");
+
+                    string fileName = originalName + extension;
+                    string finalPath = Path.Combine(productosPath, fileName);
+
+                    int counter = 1;
+                    while (System.IO.File.Exists(finalPath))
+                    {
+                        fileName = $"{originalName}_{counter}{extension}";
+                        finalPath = Path.Combine(productosPath, fileName);
+                        counter++;
+                    }
+
+                    // Guardar archivo
+                    using (var stream = new FileStream(finalPath, FileMode.Create))
+                    {
+                        await foto.CopyToAsync(stream);
                     }
 
                     producto.FotoUrl = "/images/productos/" + fileName;
                 }
+                else
+                {
+                    producto.FotoUrl = productoOriginal.FotoUrl; // Mantener imagen
+                }
 
+                // Guardar cambios
                 try
                 {
                     _context.Update(producto);
@@ -147,10 +207,9 @@ namespace Proyecto.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_context.Productos.Any(e => e.Id == producto.Id))
+                    if (!_context.Productos.Any(p => p.Id == producto.Id))
                         return NotFound();
-                    else
-                        throw;
+                    throw;
                 }
 
                 return RedirectToAction(nameof(Index));

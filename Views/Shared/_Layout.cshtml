@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Proyecto</title>
+    <title>@ViewData["Title"] - AdoptaPet Proyect</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -22,7 +22,7 @@
             <div class="container-fluid">
 
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fa-solid fa-paw me-2"></i>Proyecto
+                    <i class="fa-solid fa-paw me-2"></i>AdoptaPet
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
@@ -102,13 +102,13 @@
                         {
                             <div class="text-white text-end border-start ps-3" style="border-color: rgba(255,255,255,0.3) !important;">
                                 <div class="fw-bold" style="font-size: 0.9rem; line-height: 1.1;">@userName</div>
-                                <div style="font-size: 0.75rem; opacity: 0.8;">@userRole</div>
+                                <div class="fw-bold" style="font-size: 0.75rem; opacity: 0.8;">@userRole</div>
                             </div>
 
                             @if (userRole == "Administrador")
                             {
                                 <a class="btn btn-light text-primary fw-bold btn-sm" asp-controller="Admin" asp-action="Index">
-                                    <i class="bi bi-speedometer2"></i> Panel
+                                    <i class="bi-tools"></i> Panel de Administración
                                 </a>
                             }
                         }

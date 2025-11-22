@@ -24,14 +24,6 @@ html {
     border: none;
 }
 
-/* Marco decorativo de huellitas para el banner */
-.banner-marco {
-    border: 20px solid transparent;
-    border-image: url('/images/huellas-border.png') 40 round;
-    border-radius: 20px;
-    overflow: hidden; /* para que la imagen del banner no sobresalga */
-}
-
 /* la clase table-primary en thead */
 .table.table-striped thead.table-primary th {
     background-color: #007bff;
@@ -86,6 +78,56 @@ html {
     }
 }
 
+/* ---- CARD MEJORADA PARA PRODUCTOS ---- */
+.product-card {
+    border: 1px solid rgba(0, 102, 255, 0.25); /* Azul MUY sutil */
+    border-radius: 12px;
+    background: #fff;
+    padding: 20px;
+    transition: all 0.25s ease-in-out;
+    /* Sombra gris clara */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+    /* Efecto al pasar el mouse */
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        border-color: rgba(0, 102, 255, 0.45); /* Azul un poco más visible */
+    }
+
+    /* Imagen centrada y con borde suave */
+    .product-card img {
+        max-width: 100%;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+        .product-card img:hover {
+            transform: scale(1.05);
+        }
+
+    /* Títulos y textos */
+    .product-card .title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-top: 10px;
+        color: #222;
+    }
+
+    .product-card .category {
+        letter-spacing: 1px;
+        font-size: 0.75rem;
+        color: #777;
+    }
+
+    .product-card .price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0066ff;
+        margin: 10px 0;
+    }
+
 body {
   margin-bottom: 60px;
 }
@@ -125,8 +167,57 @@ body {
     margin: 0 auto;
 }
 
-/* Evitar que imágenes enormes rompan el layout */
+/* Evitar que imágenes enormes rompan el layout de pánel admin*/
 .admin-content-container img {
     max-width: 100%;
     height: auto;
+}
+
+/* CONTENEDOR GENERAL */
+.blog-container {
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+/* TÍTULO */
+.blog-title {
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+/* FECHA + AUTOR (alineado con la imagen, no centrado) */
+.blog-meta {
+    font-size: 16px;
+    color: #6c757d;
+    margin-left: 8px;
+    margin-bottom: 15px;
+}
+
+/* CONTENEDOR DE IMAGEN */
+.blog-image-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+/* IMAGEN ESTILO BANNER */
+.blog-image {
+    width: 100%;
+    max-width: 1000px;
+    height: 420px; /* recorte tipo rectangular */
+    object-fit: cover; /* evita deformaciones */
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+}
+
+/* CUERPO DEL TEXTO */
+.blog-content {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-top: 25px;
+}
+
+.form-bottom-space {
+    padding-bottom: 120px !important; /* evita que el footer tape los botones */
 }

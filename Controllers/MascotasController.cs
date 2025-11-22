@@ -58,58 +58,57 @@ namespace Proyecto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nombre,Especie,Raza,Edad,EstadoAdopcion")] Mascota mascota, IFormFile? foto)
+        public async Task<IActionResult> Create(
+        [Bind("Nombre,Especie,Raza,Edad,EstadoAdopcion,FotoUrl")] Mascota mascota,
+        IFormFile? foto)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string mascotaPath = Path.Combine(wwwRootPath, "images", "mascotas");
+
+                if (!Directory.Exists(mascotaPath))
+                    Directory.CreateDirectory(mascotaPath);
+
                 if (foto != null)
                 {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string imagesPath = Path.Combine(wwwRootPath, "images");
-
-                    if (!Directory.Exists(imagesPath))
-                        Directory.CreateDirectory(imagesPath);
-
-                    // 1) Obtener nombre ORIGINAL del archivo
+                    // Nombre original
                     string originalName = Path.GetFileNameWithoutExtension(foto.FileName);
                     string extension = Path.GetExtension(foto.FileName);
 
-                    // 2) Limpiar nombre (sin espacios raros ni caracteres inválidos)
+                    // Limpieza
                     originalName = Regex.Replace(originalName, @"[^a-zA-Z0-9_-]", "_");
 
-                    // 3) Crear un nombre final evitando reemplazar archivos existentes
+                    // Nombre final
                     string fileName = originalName + extension;
-                    string finalPath = Path.Combine(imagesPath, fileName);
+                    string finalPath = Path.Combine(mascotaPath, fileName);
 
                     int counter = 1;
                     while (System.IO.File.Exists(finalPath))
                     {
                         fileName = $"{originalName}_{counter}{extension}";
-                        finalPath = Path.Combine(imagesPath, fileName);
+                        finalPath = Path.Combine(mascotaPath, fileName);
                         counter++;
                     }
 
-                    // 4) Copiar archivo
+                    // Guardar archivo
                     using (var stream = new FileStream(finalPath, FileMode.Create))
                     {
                         await foto.CopyToAsync(stream);
                     }
 
-                    // 5) Guardar URL accesible
-                    mascota.FotoUrl = "/images/" + fileName;
+                    mascota.FotoUrl = "/images/mascotas/" + fileName;
                 }
 
-                // Normalización de estado
+                // Normalización
                 mascota.EstadoAdopcion = string.IsNullOrWhiteSpace(mascota.EstadoAdopcion)
                                        ? "SIN ADOPTAR"
                                        : Regex.Replace(mascota.EstadoAdopcion.Trim(), @"\s+", " ").ToUpperInvariant();
-
                 _context.Add(mascota);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
-
             return View(mascota);
         }
         // GET: Mascotas/Edit/5
@@ -132,70 +131,78 @@ namespace Proyecto.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Especie,Raza,Edad,EstadoAdopcion,FotoUrl")] Mascota mascota, IFormFile? foto)
+        public async Task<IActionResult> Edit(int id,
+        [Bind("Id,Nombre,Especie,Raza,Edad,EstadoAdopcion,FotoUrl")] Mascota mascota,
+        IFormFile? foto)
         {
             if (id != mascota.Id)
                 return NotFound();
 
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+                string mascotaPath = Path.Combine(wwwRootPath, "images", "mascotas");
+
+                if (!Directory.Exists(mascotaPath))
+                    Directory.CreateDirectory(mascotaPath);
+
+                // Cargar el registro actual
+                var mascotaOriginal = await _context.Mascotas.AsNoTracking()
+                                     .FirstOrDefaultAsync(m => m.Id == mascota.Id);
+
+                if (mascotaOriginal == null)
+                    return NotFound();
+
                 if (foto != null)
                 {
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
-                    string imagesPath = Path.Combine(wwwRootPath, "images");
-
-                    if (!Directory.Exists(imagesPath))
-                        Directory.CreateDirectory(imagesPath);
-
-                    // 1. Borrar imagen anterior si existe
-                    if (!string.IsNullOrEmpty(mascota.FotoUrl))
+                    // 1. Eliminar la imagen anterior
+                    if (!string.IsNullOrEmpty(mascotaOriginal.FotoUrl))
                     {
-                        string fullOldPath = Path.Combine(wwwRootPath, mascota.FotoUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(fullOldPath))
-                            System.IO.File.Delete(fullOldPath);
+                        string oldFullPath = Path.Combine(wwwRootPath, mascotaOriginal.FotoUrl.TrimStart('/'));
+
+                        if (System.IO.File.Exists(oldFullPath))
+                            System.IO.File.Delete(oldFullPath);
                     }
 
-                    // 2. Obtener nombre original
+                    // 2. Usar el nombre original limpio
                     string originalName = Path.GetFileNameWithoutExtension(foto.FileName);
                     string extension = Path.GetExtension(foto.FileName);
 
                     originalName = Regex.Replace(originalName, @"[^a-zA-Z0-9_-]", "_");
 
                     string fileName = originalName + extension;
-                    string finalPath = Path.Combine(imagesPath, fileName);
+                    string finalPath = Path.Combine(mascotaPath, fileName);
 
                     int counter = 1;
                     while (System.IO.File.Exists(finalPath))
                     {
                         fileName = $"{originalName}_{counter}{extension}";
-                        finalPath = Path.Combine(imagesPath, fileName);
+                        finalPath = Path.Combine(mascotaPath, fileName);
                         counter++;
                     }
 
-                    // 3. Guardar la nueva imagen
+                    // 3. Guardar imagen nueva
                     using (var stream = new FileStream(finalPath, FileMode.Create))
                     {
                         await foto.CopyToAsync(stream);
                     }
 
-                    mascota.FotoUrl = "/images/" + fileName;
+                    mascota.FotoUrl = "/images/mascotas/" + fileName;
                 }
-
-                // Obtener registro original desde la BD
-                var mascotaOriginal = await _context.Mascotas.AsNoTracking()
-                                                             .FirstOrDefaultAsync(m => m.Id == mascota.Id);
-
-                if (mascotaOriginal == null)
-                    return NotFound();
-
-                // ESTADO (MUY IMPORTANTE)
-                if (!string.IsNullOrWhiteSpace(mascota.EstadoAdopcion))
+                else
                 {
-                    mascotaOriginal.EstadoAdopcion = Regex.Replace(
-                        mascota.EstadoAdopcion.Trim(), @"\s+", " "
-                    ).ToUpperInvariant();
+                    // Mantener imagen anterior
+                    mascota.FotoUrl = mascotaOriginal.FotoUrl;
                 }
 
+                // NORMALIZAR ESTADO
+                mascota.EstadoAdopcion = Regex.Replace(
+                    mascota.EstadoAdopcion?.Trim() ?? "SIN ADOPTAR",
+                    @"\s+",
+                    " "
+                ).ToUpperInvariant();
+
+                // Guardar
                 _context.Update(mascota);
                 await _context.SaveChangesAsync();
 

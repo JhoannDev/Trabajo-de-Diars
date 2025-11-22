@@ -1,13 +1,33 @@
 ﻿@model Proyecto.Models.Blog
 
-<h2>@Model.Titulo</h2>
-<p class="text-muted">@Model.FechaPublicacion.ToShortDateString() - <b>@Model.Autor</b></p>
+<div class="container blog-container">
 
-@if (!string.IsNullOrEmpty(Model.ImagenUrl))
-{
-    <img src="@Model.ImagenUrl" class="img-fluid mb-3 rounded" alt="@Model.Titulo" />
-}
+    <!-- TÍTULO -->
+    <h2 class="blog-title">@Model.Titulo</h2>
 
-<p>@Model.Contenido</p>
+    <!-- FECHA Y AUTOR alineado con la imagen -->
+    <div class="blog-meta">
+        @Model.FechaPublicacion.ToShortDateString() — <b>@Model.Autor</b>
+    </div>
 
-<a asp-action="Index" class="btn btn-secondary">🔙 Volver al Blog</a>
+    <!-- IMAGEN -->
+    @if (!string.IsNullOrEmpty(Model.ImagenUrl))
+    {
+        <div class="blog-image-wrapper">
+            <img src="@Model.ImagenUrl" class="blog-image" alt="@Model.Titulo">
+        </div>
+    }
+
+    <!-- CONTENIDO -->
+    <div class="blog-content">
+        @Html.Raw(Model.Contenido)
+    </div>
+
+    <!-- BOTÓN VOLVER -->
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-primary px-4">
+            ← Volver
+        </a>
+    </div>
+
+</div>

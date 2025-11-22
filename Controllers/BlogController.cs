@@ -54,7 +54,6 @@ namespace Proyecto.Controllers
         public IActionResult Crear(Blog blog)
         {
             var role = HttpContext.Session.GetString("UserRole");
-            var userName = HttpContext.Session.GetString("UserName");
 
             if (role != "Administrador")
                 return RedirectToAction("Index");
@@ -62,11 +61,7 @@ namespace Proyecto.Controllers
             if (ModelState.IsValid)
             {
                 blog.FechaPublicacion = DateTime.Now;
-                blog.Activo = true;
-
-                // Asignamos el autor automáticamente desde sesión
-                if (string.IsNullOrEmpty(blog.Autor))
-                    blog.Autor = userName ?? "Anónimo";
+                blog.Activo = true; // no se pide en el formulario
 
                 _context.Blogs.Add(blog);
                 _context.SaveChanges();

@@ -22,8 +22,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h1 class="display-4">@Model.Nombre</h1>
-            <p class="fs-4 text-muted">@Model.Especie - @Model.Raza</p>
+            <h1 class="display-4 fw-bold">@Model.Nombre</h1>
+            <p class="fs-4 text-muted fw-bold">@Model.Especie - @Model.Raza</p>
             <hr>
 
             <h3>Detalles</h3>
@@ -32,8 +32,8 @@
                 <li><strong>Estado:</strong> @Model.EstadoAdopcion</li>
             </ul>
 
-            <h3>Nuestra Historia</h3>
-            <p>HISTORIA</p>
+            <h3>Descripcion:</h3>
+            <p>Historia...</p>
 
             <div class="d-grid gap-2 mt-4">
                 <a asp-action="Postular" asp-route-id="@Model.Id" class="btn btn-success btn-lg">
